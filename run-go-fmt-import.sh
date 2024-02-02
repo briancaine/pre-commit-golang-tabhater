@@ -1,13 +1,18 @@
 #!/bin/sh
 
-LIST_OF_FILES=$(goimports -l -w "$@")
+LIST_OF_FILES=""
 
-# remove tabs, then print a list of affected files if any
-for file in $(echo "$LIST_OF_FILES"); do
+for file in "$@"; do
+  pre_hash=$(md5sum "$file")
+  goimports -l -w "$file" >/dev/null
   sed -i -E 's/\t/  /g' "$file"
-  echo "$file"
+  post_hash=$(md5sum "$file")
+  if [ "$pre_hash" != "$post_hash" ]; then
+      LIST_OF_FILES=$(echo $file; echo $LISTOF_FILES)
+      echo $file
+  fi
 done
 
-if [ -n "$LIST_OF_FILES" ];then
-  exit 1
+if [ -n "$LIST_OF_FILES" ]; then
+    exit 1
 fi
