@@ -1,0 +1,13 @@
+- id: go-fmt-import
+  name: "go import/fmt"
+  entry: run-go-fmt-import.sh
+  files: '\.go$'
+  language: "script"
+  description: "Runs `goimport,gofmt`, requires golang"
+
+- id: gofumpt
+  name: "gofumpt"
+  entry: run-go-gofumpt.sh
+  files: '\.go$'
+  language: "script"
+  description: "Runs `gofumpt`, requires github.com/mvdan/gofumpt"
